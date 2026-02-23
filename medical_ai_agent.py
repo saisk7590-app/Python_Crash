@@ -1,69 +1,109 @@
 import os
+import sys
+import re
 from pypdf import PdfReader
-from langchain_ollama import OllamaLLM
-from langchain.agents import initialize_agent, Tool, AgentType
+from langchain_ollama import ChatOllama
 
-llm = OllamaLLM(model="phi3")
+# Set encoding for Windows console to handle emojis
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-# Tool 1
-def read_pdf_tool(filename):
+llm = ChatOllama(model="phi3")
+
+# Tools definition
+def read_pdf_tool(filename: str):
     if not filename.endswith(".pdf"):
         filename += ".pdf"
-
-    if not os.path.exists(filename):
-        return "File not found."
-
-    reader = PdfReader(filename)
+    filepath = os.path.join("Reports", filename)
+    if not os.path.exists(filepath):
+        return f"File not found in Reports directory. Looked for {filepath}"
+    reader = PdfReader(filepath)
     text = ""
     for page in reader.pages:
         page_text = page.extract_text()
         if page_text:
             text += page_text + "\n"
-
     return text
 
-# Tool 2
-def read_all_reports(_):
+def read_all_reports_tool(_=None):
     combined_text = ""
-    for file in os.listdir():
+    reports_dir = "Reports"
+    if not os.path.exists(reports_dir):
+        return "Reports directory not found."
+    for file in os.listdir(reports_dir):
         if file.endswith(".pdf"):
-            reader = PdfReader(file)
+            reader = PdfReader(os.path.join(reports_dir, file))
             for page in reader.pages:
                 page_text = page.extract_text()
                 if page_text:
                     combined_text += page_text + "\n"
+    return combined_text if combined_text else "No reports found in Reports folder."
 
-    return combined_text if combined_text else "No reports found."
+tools = {
+    "ReadPDF": read_pdf_tool,
+    "ReadAllReports": read_all_reports_tool
+}
 
-tools = [
-    Tool(
-        name="ReadPDF",
-        func=read_pdf_tool,
-        description="Read a specific patient report PDF file."
-    ),
-    Tool(
-        name="ReadAllReports",
-        func=read_all_reports,
-        description="Read all patient report PDFs in folder."
-    )
-]
+agent_prompt = """You are a medical assistant having a conversation with a human.
+You have access to the following tools:
+- ReadPDF: Read a specific patient report PDF file. Input should be the filename.
+- ReadAllReports: Read all patient report PDFs in folder. Input can be anything.
 
-agent = initialize_agent(
-    tools,
-    llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True
-)
+Use the following format:
+Thought: you should always think about what to do
+Action: the action to take, should be one of [ReadPDF, ReadAllReports]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Human: {input}
+{agent_scratchpad}"""
 
 print("🧠 Medical Agent Ready")
 
 while True:
-    query = input("\nAsk your medical question (or type exit): ")
+    try:
+        query = input("\nAsk your medical question (or type exit): ")
+    except EOFError:
+        break
 
     if query.lower() == "exit":
         break
 
-    response = agent.run(query)
+    scratchpad = ""
+    while True:
+        prompt = agent_prompt.format(input=query, agent_scratchpad=scratchpad)
+        response = llm.invoke(prompt).content
+        
+        print(f"\n[Agent Thought Process]:\n{response}\n")
 
-    print("\n🩺 Agent Response:\n")
-    print(response)
+        if "Final Answer:" in response:
+            final_answer = response.split("Final Answer:")[-1].strip()
+            print("\n🩺 Agent Response:\n")
+            print(final_answer)
+            break
+            
+        action_match = re.search(r"Action: ([\w]+)", response)
+        action_input_match = re.search(r"Action Input: (.*)", response)
+        
+        if action_match and action_input_match:
+            action = action_match.group(1).strip()
+            action_input = action_input_match.group(1).strip()
+            
+            if action in tools:
+                print(f"🛠️ Using Tool '{action}' with input '{action_input}'...")
+                observation = tools[action](action_input)
+                # Keep scratchpad concise to avoid token limits
+                if len(observation) > 1000:
+                    observation = observation[:1000] + "... [TRUNCATED]"
+                scratchpad += f"{response}\nObservation: {observation}\n"
+            else:
+                scratchpad += f"{response}\nObservation: Tool {action} not found.\n"
+        else:
+            # Fallback if the model didn't format correctly
+            print("\n🩺 Agent Response (Fallback):\n")
+            print(response)
+            break

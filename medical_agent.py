@@ -1,7 +1,13 @@
 import os
+import sys
 from pypdf import PdfReader
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+
+# Set encoding for Windows console to handle emojis
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Load local Ollama model (make sure ollama is running)
 llm = OllamaLLM(model="phi3")
@@ -53,14 +59,15 @@ while True:
     if not filename.endswith(".pdf"):
         filename += ".pdf"
 
-    # Check if file exists in current project folder
-    if not os.path.exists(filename):
-        print("❌ Report not found in project folder. Try again.")
+    # Check if file exists in Reports folder
+    filepath = os.path.join("Reports", filename)
+    if not os.path.exists(filepath):
+        print(f"❌ Report not found in Reports folder. Try again. (Looked for: {filepath})")
         continue
 
     print("📖 Reading report...")
 
-    report_text = read_pdf(filename)
+    report_text = read_pdf(filepath)
 
     question = input("Ask question about this report: ")
 
