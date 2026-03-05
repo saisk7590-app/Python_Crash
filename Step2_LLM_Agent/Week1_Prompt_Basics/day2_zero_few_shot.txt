@@ -1,0 +1,169 @@
+Week 1 — Day 2 | Date: 2026-03-05
+Topic: Zero-shot vs Few-shot Prompting
+
+---
+
+Exercise 1 — Zero-shot vs Few-shot Translation
+
+Zero-shot Prompt
+
+Prompt:
+Translate this sentence to Spanish: "The weather is nice today."
+
+Output:
+El clima está bonito hoy.
+
+Observation:
+The model translated the sentence correctly even without examples.
+This shows that LLMs already know many patterns from training data and can perform simple tasks without guidance.
+
+---
+
+Few-shot Prompt
+
+Prompt:
+English: "I am happy." → Spanish: "Estoy feliz."
+English: "You are smart." → Spanish: "Eres inteligente."
+English: "The weather is nice today." → Spanish:
+
+Output:
+El clima está bonito hoy.
+
+Observation:
+Because examples were provided, the model understood the translation pattern clearly and continued it correctly.
+
+---
+
+Exercise 2 — Few-shot for Python Explanation
+
+Prompt Pattern Given:
+
+1. Loops repeat code
+2. Types: for, while
+3. Useful for automation
+
+Prompt:
+Now explain functions in Python in 3 bullet points.
+
+Observation:
+The model attempted to follow the pattern but produced a very long explanation with multiple paragraphs and code examples.
+
+Key Insight:
+Few-shot prompting helps the model understand structure, but the model may still produce extra information if strict constraints are not specified.
+
+To control this, prompts should include instructions like:
+
+"Explain in exactly 3 short bullet points."
+
+---
+
+Exercise 3 — Role + Few-shot Prompting
+
+Prompt:
+You are a friendly mentor.
+Explain Python lists in 3 points like these examples.
+
+Output Characteristics:
+
+• The model spoke in a friendly tone
+• The explanation sounded supportive and conversational
+• The structure still followed the 3-point pattern
+
+Example Output:
+
+1. Lists store multiple items in an ordered collection.
+2. Lists are mutable, meaning items can be changed, added, or removed.
+3. Lists can store different types of data and can even contain other lists.
+
+Observation:
+Assigning a role changes the personality and tone of the response.
+This technique can be used to design AI assistants with specific behavior styles.
+
+---
+
+My Observations
+
+1. Zero-shot prompting gives the model a task without examples.
+
+2. Few-shot prompting provides examples so the model can follow a pattern.
+
+3. Role instructions influence the tone and personality of the response.
+   For example, using "friendly mentor" makes the explanation more conversational.
+
+4. Few-shot prompts can sometimes produce very long answers if the instructions are not strict.
+
+5. Zero-shot prompts are simpler, while few-shot prompts provide more control over output structure.
+
+---
+
+Day 2 — Theory Notes
+
+1️⃣ What is Zero-shot Prompting?
+
+Zero-shot prompting means giving the model a task without providing any examples.
+The model must rely entirely on its pre-trained knowledge to generate the answer.
+
+Example:
+
+Translate this sentence to Spanish:
+"The weather is nice today."
+
+Advantages:
+• Fast and simple
+• Works well for common tasks
+
+Disadvantages:
+• Less control over structure
+• Higher chance of inconsistent output
+
+---
+
+2️⃣ What is Few-shot Prompting?
+
+Few-shot prompting provides a few examples in the prompt so the model can learn the expected pattern before answering.
+
+Example:
+
+English: "I am happy." → Spanish: "Estoy feliz."
+English: "You are smart." → Spanish: "Eres inteligente."
+English: "The weather is nice today." → Spanish:
+
+Advantages:
+• Improves accuracy
+• Improves consistency
+• Helps enforce patterns and formatting
+
+Disadvantages:
+• Prompts become longer
+• Requires carefully chosen examples
+
+---
+
+3️⃣ When to Use Zero-shot vs Few-shot
+
+Use Zero-shot when:
+
+• The task is simple
+• The model already understands the concept
+• Speed is important
+
+Use Few-shot when:
+
+• You want structured output
+• You want consistent formatting
+• The task is complex or ambiguous
+
+---
+
+Day 2 Key Insight
+
+Providing examples in prompts acts like teaching the model by demonstration rather than programming new logic.
+
+Few-shot prompting is one of the most important techniques used when building reliable AI agents and LLM-powered applications.
+
+---
+
+Next Topic
+
+Week 1 — Day 3
+Chain-of-Thought Prompting
