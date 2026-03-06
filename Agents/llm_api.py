@@ -2,14 +2,17 @@ import requests
 
 url = "http://localhost:11434/api/generate"
 
-def ask_llm(question):
+
+def ask_llm(prompt):
 
     data = {
         "model": "phi3:mini",
-        "prompt": question,
+        "prompt": prompt,
         "stream": False
     }
 
-    response = requests.post(url, json=data)
+    response = requests.post(url, json=data, timeout=30)
 
-    return response.json()["response"]
+    result = response.json()
+
+    return result["response"]

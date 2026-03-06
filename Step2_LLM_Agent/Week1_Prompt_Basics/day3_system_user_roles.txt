@@ -1,0 +1,99 @@
+Week 1 — Day 3 | Date: 2026-03-06
+*********************************
+Ask a question (type exit to stop): Explain Python dictionaries in 3 points     
+
+--- Friendly Mentor Answer ---
+
+
+1. **What are Python dictionaries?**    
+
+   Python dictionaries, or 'dicts', are like real-life dictionaries but for code. Imagine you have a book with words and their meanings. 
+   In Python, you can do the same! You can find things and remember them easily. Each 'word' or item in the dictionary has a 'key', and this key 
+   helps you find its meaning or 'value'. It's a way of storing information that you can quickly find, but it'd be like looking up a word in a dictionary.
+
+2. **Creating and Using a Dictionary**  
+
+   To create a Python dictionary, you use curly brackets {} and separate keys and values with a colon (:). It's like telling Python: 
+   "I have a word and its meaning, store it here." Here's an example: 
+
+    ```python
+    animal_sounds = {
+        "dog": "woof",
+        "cat": "meow",
+        "cow": "moo"
+    }
+    ```
+
+    You can then look up an animal's sound using its key, like this:
+
+    ```python
+    print(animal_sounds["dog"])  # Outputs: woof
+    ```
+
+3. **Modifying Dictionaries**
+
+   Dictionaries are super flexible. You 
+can add, remove, or change items just like you'd add, remove, or change words in a dictionary. If you find out that a cow actually says 
+"moo-o-o", you can update it like this:
+
+    ```python
+    animal_sounds["cow"] = "moo-o-o"    
+    print(animal_sounds)  # Outputs: {'dog': 'woof', 'cat': 'meow', 'cow': 'moo-o-o'}
+    ```
+
+   Python dictionaries are powerful tools for storing and manipulating data, and they're like your own personal, digital,
+    Python dictionary. They're your friend in writing better, more organized code.
+
+--- Strict Teacher Answer ---
+
+
+1. Python dictionaries, also known as associative arrays or hash tables in 
+other programming languages, are built-in data structures in Python used to store data values in key-value pairs. 
+Each key-value pair maps the key to its associated value. Keys are unique within a dictionary, and corresponding 
+values can be accessed by their key using the square bracket notation. Dictionaries are mutable, meaning they can be 
+changed after they are created.
+
+2. Dictionaries are created using braces {} and colons : to separate keys from values. An empty dictionary can be 
+initialized by just using an empty brace pair. Dictionary elements are separated by commas. The syntax to create a 
+dictionary is: dict = {key1: value1, key2: value2, ...} or dict = dict(key1=value1, key2=value2, ...). 
+
+3. The primary operations on Python dictionaries include:
+
+   a. Accessing values: Access the value of a key by using the square bracket notation.
+    For example: my_dict[key]
+
+   b. Modifying values: Update the value of a key by reassigning the key with a new value.
+    For example: my_dict[key] = new_value
+
+2. Dictionaries are created using braces {} and colons : to separate keys from values. An empty dictionary can be 
+initialized by just using an empty brace pair. Dictionary elements are separated by commas. The syntax to create a dictionary 
+is: dict = {key1: value1, key2: value2, 
+...} or dict = dict(key1=value1, key2=value2, ...).
+
+3. The primary operations on Python dictionaries include:
+
+   a. Accessing values: Access the value of a key by using the square bracket notation. For example: my_dict[key]       
+
+   b. Modifying values: Update the value of a key by reassigning the key with a 
+new value. For example: my_dict[key] = new_value
+
+   c. Adding new key-value pairs: Create a new key-value pair using the square bracket notation. For example: my_dict[new_key] = new_value
+
+   d. Deleting key-value pairs: Remove a key-value pair using the del statement 
+or the pop() method. For example: del my_dict[key] or my_dict.pop(key)
+
+These three points encapsulate the fundamental concepts of Python dictionaries and their basic operations.
+
+
+****************************
+System Role:
+Defines AI behavior and personality.
+
+User Role:
+Actual user question.
+
+Observation:
+Same question produces different answers depending on system role.
+
+Conclusion:
+System roles control tone, style, and structure of AI responses.

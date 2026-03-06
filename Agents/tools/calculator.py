@@ -1,8 +1,14 @@
+import re
+
 def calculate(expression):
 
     try:
-        result = eval(expression)
-        return f"Answer: {result}"
+        expr = re.findall(r"[0-9\.\+\-\*\/\(\)]+", expression)
+        expr = "".join(expr)
+
+        result = eval(expr)
+
+        return f"Result: {result}"
 
     except:
-        return "Invalid math expression."
+        return "Could not calculate."
