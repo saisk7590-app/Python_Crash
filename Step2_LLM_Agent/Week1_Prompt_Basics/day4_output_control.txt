@@ -1,0 +1,49 @@
+Week 1 — Day 4 | Date: 2026-03-09
+
+(Day 3 was System vs User roles, today you practiced output formatting)
+
+*********************************************
+You: explain machine learning in this format only
+definition, types, examples
+not lengthy, just small sentences
+
+Agent:
+
+Definition: Machine learning is a subset of AI that enables systems to learn from data.
+Types: Supervised learning, Unsupervised learning, Reinforcement learning.
+Examples: Image recognition, Speech assistants, Self-driving cars.
+*********************************************
+
+You: Compare AI, ML, Deep Learning ONLY IN TABLE FORMAT
+
+Agent:
+
+| Characteristics | AI | ML | Deep Learning |
+|----------------|----|----|---------------|
+| Definition | Simulates human intelligence | Subset of AI that learns from data | Subset of ML using neural networks |
+| Techniques | Rule-based systems | Regression, classification | Neural networks |
+| Data Requirement | Low to moderate | Moderate | Very high |
+| Applications | Chatbots, games | Recommendation systems | Image & speech recognition |
+*********************************************
+
+You: Explain neural networks in JSON format. Simple sentences only.
+
+Agent:
+
+{
+ "definition": "Neural networks are computing systems inspired by the human brain.",
+ "function": "They learn patterns from data.",
+ "components": "They contain layers of interconnected neurons.",
+ "purpose": "They are used for tasks like image recognition and language processing."
+}
+*********************************************
+Observation
+
+The AI followed the exact output format requested by the prompt (bullet structure, table, and JSON).
+
+Conclusion
+
+Prompt engineering can control how AI structures its responses, which is useful for automation, coding, APIs, and AI agents.
+
+✅ Skill learned today:
+Controlling LLM outputs using structured prompts (tables, JSON, fixed formats).
