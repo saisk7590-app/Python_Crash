@@ -1,0 +1,13 @@
+Week 1 — Day 5 | Date: 2026-03-10
+
+********************
+
+*********
+Observation
+Reusable prompt templates make prompt engineering faster and scalable.
+The same template can generate responses for many topics.
+
+***************************
+Conclusion
+Prompt templates allow AI systems and agents to dynamically generate prompts by filling variables.
+This is important for automation and agent design.
